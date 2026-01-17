@@ -40,9 +40,15 @@ exports.createGame = async (req, res) => {
     let imageUrl = null;
     if (req.file) {
       // Upload to ImgBB
-      console.log('📤 Uploading image to ImgBB...');
-      imageUrl = await uploadToImgBB(req.file.buffer, req.file.originalname);
-      console.log('✅ Image uploaded:', imageUrl);
+      try {
+        console.log('📤 Uploading image to ImgBB...');
+        imageUrl = await uploadToImgBB(req.file.buffer, req.file.originalname);
+        console.log('✅ Image uploaded:', imageUrl);
+      } catch (uploadError) {
+        console.error('⚠️ Image upload failed, continuing without image:', uploadError.message);
+        // Continue without image - don't crash the request
+        imageUrl = null;
+      }
     }
 
     console.log('📝 Creating new game:', name);
@@ -81,9 +87,15 @@ exports.updateGame = async (req, res) => {
     let imageUrl = undefined;
     if (req.file) {
       // Upload to ImgBB
-      console.log('📤 Uploading image to ImgBB...');
-      imageUrl = await uploadToImgBB(req.file.buffer, req.file.originalname);
-      console.log('✅ Image uploaded:', imageUrl);
+      try {
+        console.log('📤 Uploading image to ImgBB...');
+        imageUrl = await uploadToImgBB(req.file.buffer, req.file.originalname);
+        console.log('✅ Image uploaded:', imageUrl);
+      } catch (uploadError) {
+        console.error('⚠️ Image upload failed:', uploadError.message);
+        // Keep existing image - don't update imageUrl
+        imageUrl = undefined;
+      }
     }
 
     const connection = await pool.getConnection();
