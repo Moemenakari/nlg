@@ -4,27 +4,103 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#E53935" />
+
+    <!-- SEO Meta Tags - Lebanon Local Search Optimization -->
+    <title>Arcade Games Lebanon | Event Arcade Rental – Next Level Game</title>
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Rent arcade games for events in Lebanon 🎮 Boxing, Basketball, King of the Hammer & more. Perfect for festivals, schools, universities & corporate events across Lebanon. Book now!"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta
+      name="keywords"
+      content="arcade games Lebanon, arcade for events Lebanon, boxing arcade Lebanon, basketball arcade Lebanon, King of the Hammer Lebanon, event games Lebanon, ألعاب أركيد لبنان, ألعاب إيفنتات لبنان, ألعاب مهرجانات لبنان"
+    />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:title"
+      content="Arcade Games Lebanon | Event Arcade Rental – Next Level Game"
+    />
+    <meta
+      property="og:description"
+      content="Lebanon's #1 arcade game rental service for events, festivals, and celebrations. Professional arcade entertainment across all Lebanon."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_LB" />
+    <meta
+      property="og:image"
+      content="%PUBLIC_URL%/assets/images/logo-white.jpg"
+    />
+
+    <!-- Geographic Meta Tags -->
+    <meta name="geo.region" content="LB" />
+    <meta name="geo.placename" content="Lebanon" />
+
+    <!-- Structured Data - Local Business Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Next Level Game – Arcades",
+        "description": "Arcade game rental service for events in Lebanon. Boxing arcade, King of the Hammer, basketball arcade, and complete event arcade setups.",
+        "image": "%PUBLIC_URL%/assets/images/logo-white.jpg",
+        "telephone": "+96170420110",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Lebanon"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Tripoli",
+          "addressCountry": "LB"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "34.4367",
+          "longitude": "35.8497"
+        },
+        "priceRange": "$$",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Arcade Games Rental Lebanon",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "Boxing Arcade Machine Rental Lebanon",
+                "description": "Professional boxing arcade for events in Lebanon"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "King of the Hammer Arcade Lebanon",
+                "description": "Hammer game arcade rental for festivals and events"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "Basketball Arcade Game Rental Lebanon",
+                "description": "Basketball arcade machines for events across Lebanon"
+              }
+            }
+          ]
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "50"
+        }
+      }
+    </script>
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

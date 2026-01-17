@@ -388,32 +388,42 @@ const HeroSection = () => {
         >
           <span className="px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-bold text-white backdrop-blur-sm flex items-center gap-2" style={{ backgroundColor: 'rgba(229, 57, 53, 0.9)' }}>
             <Games style={{ fontSize: '16px' }} />
-            Lebanon's Premier Arcade Experience
+            #1 Arcade Games Rental Lebanon
           </span>
         </motion.div>
 
         <motion.h1
           variants={itemVariants}
-          className="font-poppins font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6 leading-tight px-2"
+          className="font-poppins font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 leading-tight px-2"
           style={{
             textShadow: '2px 2px 12px rgba(0,0,0,0.7)',
           }}
         >
-          <span style={{ color: COLORS.primary.yellow }}>#1</span> Arcade Zone in Lebanon
+          Arcade Games for Events in Lebanon | <span style={{ color: COLORS.primary.yellow }}>Next Level Game</span>
         </motion.h1>
 
         <motion.p
           variants={itemVariants}
-          className="font-inter font-light text-base sm:text-xl md:text-2xl mb-8 sm:mb-10 leading-relaxed px-4"
+          className="font-inter font-light text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed px-4 max-w-4xl mx-auto"
         >
-          Transforming every event into an{' '}
-          <span
-            className="font-bold"
-            style={{ color: COLORS.primary.red }}
-          >
-            unforgettable gaming experience
-          </span>
-          .
+          Bring the ultimate arcade experience to your event anywhere in Lebanon. From{' '}
+          <span className="font-bold" style={{ color: COLORS.primary.yellow }}>
+            boxing machines
+          </span>{' '}to{' '}
+          <span className="font-bold" style={{ color: COLORS.primary.yellow }}>
+            basketball arcades
+          </span>, we deliver professional gaming entertainment for festivals, corporate events, schools, and celebrations across{' '}
+          <span className="font-bold" style={{ color: COLORS.primary.red }}>
+            Beirut, Tripoli, Sidon
+          </span>, and all Lebanese cities.
+        </motion.p>
+        
+        <motion.p
+          variants={itemVariants}
+          className="font-inter font-semibold text-base sm:text-lg md:text-xl mb-8 sm:mb-10 px-4"
+          style={{ color: COLORS.primary.yellow }}
+        >
+          نوفر ألعاب أركيد احترافية لجميع الإيفنتات والمهرجانات في لبنان
         </motion.p>
 
         <motion.div
