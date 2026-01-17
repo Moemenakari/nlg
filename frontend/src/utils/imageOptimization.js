@@ -11,8 +11,8 @@
 export const getOptimizedImagePath = (imagePath) => {
   if (!imagePath) return null;
   
-  // If it's already a remote placeholder, return as is
-  if (imagePath.includes('via.placeholder.com')) {
+  // If it's a data URI or remote URL, return as is
+  if (imagePath.startsWith('data:') || imagePath.startsWith('http')) {
     return imagePath;
   }
 

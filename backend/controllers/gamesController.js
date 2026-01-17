@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const { uploadToImgBB } = require('../config/imgbb');
 
 // Get all games
 exports.getAllGames = async (req, res) => {
@@ -7,7 +8,7 @@ exports.getAllGames = async (req, res) => {
     const [games] = await connection.execute('SELECT * FROM games ORDER BY id');
     connection.release();
 
-    res.json(games);
+    res.json(games); // Images are already full URLs from Imgur
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -25,7 +26,7 @@ exports.getGame = async (req, res) => {
       return res.status(404).json({ error: 'Game not found' });
     }
 
-    res.json(games[0]);
+    res.json(games[0]); // Image is already full URL from Imgur
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -35,7 +36,14 @@ exports.getGame = async (req, res) => {
 exports.createGame = async (req, res) => {
   try {
     const { name, description, price, capacity, spaceRequired, powerRequired, usesCoins, availability } = req.body;
-    const image = req.file ? `/uploads/games/${req.file.filename}` : null;
+    
+    let imageUrl = null;
+    if (req.file) {
+      // Upload to ImgBB
+      console.log('📤 Uploading image to ImgBB...');
+      imageUrl = await uploadToImgBB(req.file.buffer, req.file.originalname);
+      console.log('✅ Image uploaded:', imageUrl);
+    }
 
     console.log('📝 Creating new game:', name);
 
@@ -47,7 +55,7 @@ exports.createGame = async (req, res) => {
     const connection = await pool.getConnection();
     const [result] = await connection.execute(
       'INSERT INTO games (name, description, price, capacity, spaceRequired, powerRequired, usesCoins, image, availability) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [name, description, price, capacity || 1, spaceRequired, powerRequired, usesCoins === 'true' || usesCoins === true, image, availability || 'Available']
+      [name, description, price, capacity || 1, spaceRequired, powerRequired, usesCoins === 'true' || usesCoins === true, imageUrl, availability || 'Available']
     );
     connection.release();
 
@@ -56,7 +64,7 @@ exports.createGame = async (req, res) => {
     res.status(201).json({
       message: 'Game created successfully! It will now appear in the frontend.',
       id: result.insertId,
-      game: { id: result.insertId, name, price }
+      game: { id: result.insertId, name, price, image: imageUrl }
     });
   } catch (error) {
     console.log('❌ Game creation error:', error.message);
@@ -69,7 +77,14 @@ exports.updateGame = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, price, capacity, spaceRequired, powerRequired, usesCoins, availability } = req.body;
-    const image = req.file ? `/uploads/games/${req.file.filename}` : undefined;
+    
+    let imageUrl = undefined;
+    if (req.file) {
+      // Upload to ImgBB
+      console.log('📤 Uploading image to ImgBB...');
+      imageUrl = await uploadToImgBB(req.file.buffer, req.file.originalname);
+      console.log('✅ Image uploaded:', imageUrl);
+    }
 
     const connection = await pool.getConnection();
     
@@ -82,12 +97,12 @@ exports.updateGame = async (req, res) => {
 
     const usesCoinsValue = usesCoins === 'true' || usesCoins === true ? 1 : 0;
 
-    const query = image 
+    const query = imageUrl 
       ? 'UPDATE games SET name=?, description=?, price=?, capacity=?, spaceRequired=?, powerRequired=?, usesCoins=?, image=?, availability=? WHERE id=?'
       : 'UPDATE games SET name=?, description=?, price=?, capacity=?, spaceRequired=?, powerRequired=?, usesCoins=?, availability=? WHERE id=?';
     
-    const params = image
-      ? [name, description, price, capacity, spaceRequired, powerRequired, usesCoinsValue, image, availability, id]
+    const params = imageUrl
+      ? [name, description, price, capacity, spaceRequired, powerRequired, usesCoinsValue, imageUrl, availability, id]
       : [name, description, price, capacity, spaceRequired, powerRequired, usesCoinsValue, availability, id];
 
     await connection.execute(query, params);

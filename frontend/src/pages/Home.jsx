@@ -623,11 +623,11 @@ const FeaturedGames = () => {
                   <motion.img
                     whileHover={{ scale: 1.15 }}
                     transition={{ duration: 0.4 }}
-                    src={game.image ? getImageUrl(game.image) : `https://via.placeholder.com/300x300?text=${encodeURIComponent(game.name)}`}
+                    src={game.image ? getImageUrl(game.image) : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23374151' width='300' height='300'/%3E%3Ctext fill='%23fff' font-family='Arial' font-size='20' text-anchor='middle' x='150' y='160'%3E${encodeURIComponent(game.name)}%3C/text%3E%3C/svg%3E`}
                     alt={game.name}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-300"
                     onError={(e) => {
-                      e.target.src = `https://via.placeholder.com/300x300?text=${encodeURIComponent(game.name)}`;
+                      e.target.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23374151' width='300' height='300'/%3E%3Ctext fill='%23fff' font-family='Arial' font-size='20' text-anchor='middle' x='150' y='160'%3E${encodeURIComponent(game.name)}%3C/text%3E%3C/svg%3E`;
                     }}
                   />
 
