@@ -347,14 +347,41 @@ export const authAPI = {
 };
 
 // ==================== UTILITY ====================
+// 🔧 FIXED VERSION - Handles all edge cases properly
 export const getImageUrl = (imagePath) => {
+  // Return null if no path provided
   if (!imagePath) return null;
-  if (imagePath.startsWith('http')) return imagePath;
+  
+  // If already a full URL, return as-is
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
 
-  // Remove leading /uploads if it exists to prevent duplication
-  const cleanPath = imagePath.startsWith('/uploads')
-    ? imagePath.substring('/uploads'.length)
-    : imagePath;
-
-  return `${API_BASE_URL.replace('/api', '')}/uploads${cleanPath}`;
+  // Get base URL without /api suffix
+  const baseUrl = API_BASE_URL.replace('/api', '');
+  
+  // Normalize the path - remove leading and trailing slashes
+  let cleanPath = imagePath.trim();
+  
+  // Remove leading slash if present
+  if (cleanPath.startsWith('/')) {
+    cleanPath = cleanPath.substring(1);
+  }
+  
+  // Remove 'uploads/' or 'uploads' prefix if present (to avoid duplication)
+  if (cleanPath.startsWith('uploads/')) {
+    cleanPath = cleanPath.substring('uploads/'.length);
+  } else if (cleanPath.startsWith('uploads')) {
+    cleanPath = cleanPath.substring('uploads'.length);
+    // Remove leading slash after 'uploads' if present
+    if (cleanPath.startsWith('/')) {
+      cleanPath = cleanPath.substring(1);
+    }
+  }
+  
+  // Build final URL with proper formatting
+  // Ensure cleanPath starts with / for proper URL construction
+  const finalPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
+  
+  return `${baseUrl}/uploads${finalPath}`;
 };
