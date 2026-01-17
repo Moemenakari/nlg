@@ -23,12 +23,11 @@ async function setupDatabase() {
                 username VARCHAR(255) UNIQUE NOT NULL,
                 email VARCHAR(255) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                role VARCHAR(20) DEFAULT 'admin',
+                role VARCHAR(20) DEFAULT 'user',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
         console.log('✅ Users table created');
-
         // Create games table
         await connection.query(`
             CREATE TABLE IF NOT EXISTS games (
@@ -100,10 +99,9 @@ async function setupDatabase() {
         }
 
         const [existingUsers] = await connection.query(
-            'SELECT * FROM users WHERE username = ?',
-            [adminUsername]
+            'SELECT * FROM users WHERE username = ? OR email = ?',
+            [adminUsername, adminEmail]
         );
-
         if (existingUsers.length === 0) {
             const hashedPassword = await bcrypt.hash(adminPassword, 10);
             await connection.query(
@@ -114,9 +112,7 @@ async function setupDatabase() {
         } else {
             console.log('✅ Admin user already exists');
         }
-
-        await connection.end();
-        console.log('✅ Database setup completed!\n');
+        await connection.end();        console.log('✅ Database setup completed!\n');
     } catch (error) {
         console.error('❌ Database setup failed:', error.message);
         process.exit(1);

@@ -8,7 +8,7 @@ exports.getAllGames = async (req, res) => {
     const [games] = await connection.execute('SELECT * FROM games ORDER BY id');
     connection.release();
 
-    res.json(games); // Images are already full URLs from Imgur
+    res.json(games); // Images are full URLs from ImgBB
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -26,7 +26,7 @@ exports.getGame = async (req, res) => {
       return res.status(404).json({ error: 'Game not found' });
     }
 
-    res.json(games[0]); // Image is already full URL from Imgur
+    res.json(games[0]); // Image is full URL from ImgBB
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

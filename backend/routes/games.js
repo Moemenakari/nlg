@@ -3,15 +3,9 @@ const router = express.Router();
 const gamesController = require('../controllers/gamesController');
 const { verifyAdmin } = require('../middleware/auth');
 const multer = require('multer');
-const path = require('path');
 
-// Multer setup for image upload with validation
-const storage = multer.diskStorage({
-  destination: 'uploads/games/',
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
+// Use memory storage for Imgur upload
+const storage = multer.memoryStorage();
 
 // File filter - only allow images
 const fileFilter = (req, file, cb) => {
@@ -26,7 +20,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ 
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB max
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB max (Imgur limit)
 });
 
 // Public routes

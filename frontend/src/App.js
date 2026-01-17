@@ -13,7 +13,7 @@ function App() {
     // Initialize SEO meta tags
     updateMetaTags({
       title: 'Arcade Games Lebanon | Event Arcade Rental – Next Level Game',
-      description: 'Rent arcade games for events in Lebanon 🎮 Boxing, Basketball, King of the Hammer,Claw machine,popwin,shooting,table hockey,catch stick reflection & more. Perfect for festivals, schools, universities & corporate events across Lebanon.',
+      description: 'Rent arcade games for events in Lebanon 🎮 Boxing, Basketball, King of the Hammer, Claw Machine, Popwin, Shooting, Table Hockey, Catch Stick Reflection & more. Perfect for festivals, schools, universities & corporate events across Lebanon.',
       keywords: 'arcade games Lebanon, arcade for events Lebanon, boxing arcade Lebanon, basketball arcade Lebanon, King of the Hammer Lebanon, event games Lebanon, ألعاب أركيد لبنان, ألعاب إيفنتات لبنان, ألعاب مهرجانات لبنان',
     });
 

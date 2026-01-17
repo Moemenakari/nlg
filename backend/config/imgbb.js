@@ -11,8 +11,7 @@ async function uploadToImgBB(fileBuffer, filename) {
       throw new Error('IMGBB_API_KEY environment variable is not set');
     }
 
-    console.log('📤 Starting ImgBB upload with API key:', IMGBB_API_KEY.substring(0, 8) + '...');
-    
+    console.log('📤 Starting ImgBB upload (API key configured)');    
     // Convert buffer to base64
     const base64Image = fileBuffer.toString('base64');
     
