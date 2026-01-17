@@ -18,6 +18,9 @@ const seedRoutes = require('./routes/seed');
 
 const app = express();
 
+// Trust proxy - Required for Render/Heroku/etc to get correct IPs
+app.set('trust proxy', 1);
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
