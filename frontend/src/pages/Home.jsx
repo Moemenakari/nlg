@@ -1,7 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { CountUp } from 'use-count-up';
-import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { gamesAPI, getImageUrl } from '../services/api';
@@ -37,16 +35,16 @@ const OpeningAnimation = ({ onComplete }) => {
   const [glitchPhase, setGlitchPhase] = useState(0);
 
   React.useEffect(() => {
-    // Glitch phases timing
-    const phase1 = setTimeout(() => setGlitchPhase(1), 300);
-    const phase2 = setTimeout(() => setGlitchPhase(2), 600);
-    const phase3 = setTimeout(() => setGlitchPhase(3), 1000);
-    const phase4 = setTimeout(() => setGlitchPhase(4), 1400);
+    // Glitch phases timing (faster for 1.7s total)
+    const phase1 = setTimeout(() => setGlitchPhase(1), 200);
+    const phase2 = setTimeout(() => setGlitchPhase(2), 400);
+    const phase3 = setTimeout(() => setGlitchPhase(3), 700);
+    const phase4 = setTimeout(() => setGlitchPhase(4), 1000);
     
     const timer = setTimeout(() => {
       setShowAnimation(false);
       onComplete();
-    }, 2750); // 2.75 seconds
+    }, 1700); // 1.7 seconds
 
     return () => {
       clearTimeout(phase1);
@@ -514,7 +512,7 @@ const FeaturedGames = () => {
     const fetchGames = async () => {
       try {
         const data = await gamesAPI.getAll();
-        setGames(data.slice(0, 6)); // Show first 6 games
+        setGames(data); // Show ALL games
         // Initialize likes
         const initialLikes = {};
         data.forEach(game => {
@@ -727,115 +725,101 @@ const FeaturedGames = () => {
   );
 };
 
-// ==================== STATISTICS SECTION ====================
+// ==================== COMPACT STATISTICS STRIP ====================
 const StatisticsSection = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.3,
-  });
-
   const stats = [
-    {
-      icon: EmojiEvents,
-      value: 1,
-      label: 'the #1 Arcade Experience at  Events And more ',
-      color: '#E53935',
-    },
-    {
-      icon: Celebration,
-      value: 300,
-      label: 'Events since 2024"',
-      color: '#F77F00',
-    },
-    {
-      icon: Favorite,
-      value: 5,
-      label: 'Average Rating',
-      color: '#E53935',
-    },
+    { icon: EmojiEvents, label: '#1 Arcade Lebanon' },
+    { icon: Celebration, label: '300+ Events' },
+    { icon: Star, label: '5.0 Rating' },
   ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  };
 
   return (
     <section
-      ref={ref}
-      className="w-full py-12 sm:py-16 md:py-20"
+      className="w-full py-4 sm:py-6 border-b"
       style={{
-        background: `linear-gradient(135deg, ${COLORS.primary.navy} 0%, #2a3f5f 100%)`,
+        background: `linear-gradient(90deg, ${COLORS.primary.navy} 0%, #1a2f4f 50%, ${COLORS.primary.navy} 100%)`,
+        borderColor: 'rgba(255,255,255,0.1)',
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-row flex-wrap items-center justify-center gap-4 sm:gap-6">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <div key={index} className="flex items-center gap-2 sm:gap-3 min-w-[100px] sm:min-w-[120px] justify-center">
+                <Icon
+                  style={{
+                    fontSize: '24px',
+                    color: COLORS.primary.red,
+                  }}
+                  className="sm:text-[28px]"
+                />
+                <span
+                  className="font-inter font-semibold text-sm sm:text-base text-white"
+                >
+                  {stat.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ==================== EVENT PROMOTION STRIP ====================
+const EventPromoStrip = () => {
+  const navigate = useNavigate();
+
+  return (
+    <section
+      className="w-full py-4 sm:py-5"
+      style={{
+        background: `linear-gradient(135deg, ${COLORS.primary.red} 0%, #c62828 50%, ${COLORS.primary.red} 100%)`,
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          className="flex flex-row md:grid md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 overflow-x-auto md:overflow-visible px-2 sm:px-4 md:px-0 py-4 md:py-0"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center sm:text-left"
         >
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="flex flex-col items-center text-center min-w-[200px] sm:min-w-[220px] md:min-w-0"
-              >
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="mb-4 sm:mb-6 p-4 rounded-2xl backdrop-blur-sm"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-                >
-                  <Icon
-                    style={{
-                      fontSize: '48px',
-                      color: stat.color,
-                    }}
-                    className="sm:text-[56px]"
-                  />
-                </motion.div>
-
-                <div className="mb-2">
-                  <h3 className="font-poppins font-black text-3xl sm:text-4xl text-white">
-                    {inView && (
-                      <CountUp
-                        isCounting={inView}
-                        start={0}
-                        end={stat.value}
-                        duration={2}
-                        decimals={stat.value === 4.9 ? 1 : 0}
-                      />
-                    )}
-                    {stat.value === 4.9 && inView ? '' : stat.value === 4.9 ? '4.9' : ''}
-                    {stat.value !== 4.9 && '+'}
-                  </h3>
-                </div>
-
-                <p className="font-inter font-light text-base sm:text-lg md:text-xl text-gray-200 px-2">
-                  {stat.label}
-                </p>
-              </motion.div>
-            );
-          })}
+          <div className="flex items-center gap-2">
+            <Celebration style={{ fontSize: '22px', color: COLORS.primary.yellow }} />
+            <span className="font-poppins font-semibold text-sm sm:text-base text-white">
+              Want to rent games or host an event? We can help!
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <motion.button
+              onClick={() => navigate('/build-your-event')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 transition-all"
+              style={{
+                backgroundColor: COLORS.primary.white,
+                color: COLORS.primary.red,
+              }}
+            >
+              Build Your Event
+              <ArrowForward style={{ fontSize: '16px' }} />
+            </motion.button>
+            
+            <motion.a
+              href="https://wa.me/96171592498"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 border-2 border-white text-white hover:bg-white/10 transition-all"
+            >
+              <WhatsApp style={{ fontSize: '16px' }} />
+              Talk to Us
+            </motion.a>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -1381,6 +1365,9 @@ const Home = () => {
       </Suspense>
       <Suspense fallback={<LoadingSpinner />}>
         <FeaturedGames />
+      </Suspense>
+      <Suspense fallback={<LoadingSpinner />}>
+        <EventPromoStrip />
       </Suspense>
       <Suspense fallback={<LoadingSpinner />}>
         <StatisticsSection />
