@@ -15,8 +15,7 @@ const dbConfig = {
 // Enable SSL for TiDB Cloud and other cloud databases
 if (process.env.DB_SSL === "true") {
   dbConfig.ssl = {
-    minVersion: "TLSv1.2",
-    rejectUnauthorized: true,
+    rejectUnauthorized: false,
   };
 }
 
