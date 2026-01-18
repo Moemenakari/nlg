@@ -22,7 +22,7 @@ if (process.env.DB_SSL === "true") {
 
 const pool = mysql.createPool(dbConfig);
 
-// Test connection
+// Test connection (don't exit on error during startup - allows build to complete)
 pool
   .getConnection()
   .then((connection) => {
@@ -31,7 +31,8 @@ pool
   })
   .catch((error) => {
     console.error("❌ Database Connection Error:", error.message);
-    process.exit(1);
+    console.error("⚠️ Server will continue but database operations may fail");
+    // Don't exit - let the server start and handle errors per-request
   });
 
 module.exports = pool;
