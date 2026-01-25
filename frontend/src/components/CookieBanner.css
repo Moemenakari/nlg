@@ -105,25 +105,67 @@
 /* Mobile responsive */
 @media (max-width: 600px) {
   .cookie-banner {
-    flex-direction: column;
-    padding: 15px 20px;
-    gap: 15px;
-    text-align: center;
+    flex-direction: row; /* Keep it horizontal */
+    flex-wrap: nowrap;
+    padding: 10px 12px; /* Slimmer padding */
+    gap: 8px;
+    bottom: 0;
+    border-radius: 0; /* Full width look */
+    justify-content: space-between;
   }
   
   .cookie-content {
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
+    flex: 1; /* Take available space */
+  }
+
+  .cookie-icon {
+    font-size: 16px; /* Smaller icon */
+  }
+
+  .cookie-text {
+    font-size: 11px; /* Smaller text to fit one line */
+    line-height: 1.2;
+    white-space: nowrap; /* Try to keep in one line if possible, or let it ellipsis */
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-width: 150px; /* Force compact */
+  }
+  /* If text really needs to wrap but stay small */
+  .cookie-text {
+     white-space: normal;
+     max-width: none;
   }
 
   .cookie-buttons {
-    width: 100%;
-    justify-content: center;
-    gap: 10px;
+    width: auto;
+    justify-content: flex-end;
+    gap: 6px;
+    flex-shrink: 0; /* Don't shrink buttons */
   }
 
   .cookie-btn {
-    flex: 1;
-    padding: 10px;
+    flex: 0 0 auto;
+    padding: 6px 12px;
+    font-size: 11px;
+    min-width: auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 380px) {
+  .cookie-banner {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 12px;
+  }
+  .cookie-content {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+  .cookie-text {
+    text-align: center;
   }
 }
