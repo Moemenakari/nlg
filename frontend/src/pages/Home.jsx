@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { gamesAPI, getImageUrl } from '../services/api';
+import { trackWhatsAppClick } from '../utils/analytics';
 
 // Icons imports
 import {
@@ -812,6 +813,7 @@ const EventPromoStrip = () => {
               href="https://wa.me/96171592498"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 border-2 border-white text-white hover:bg-white/10 transition-all"
@@ -1312,6 +1314,7 @@ const FinalCTA = () => {
                 if (method.label === 'Call Us') {
                   window.location.href = `tel:${method.value}`;
                 } else if (method.label === 'WhatsApp') {
+                  trackWhatsAppClick();
                   window.open(`https://wa.me/${method.value.replace(/\+/g, '')}`, '_blank');
                 } else if (method.label === 'Email') {
                   window.location.href = `mailto:${method.value}`;

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Layout from '../components/layout/Layout';
 import { COLORS } from '../utils/constants';
 import { gamesAPI, getImageUrl } from '../services/api';
+import { trackWhatsAppClick } from '../utils/analytics';
 import {
   Games as GamesIcon,
   Close,
@@ -378,6 +379,7 @@ const Games = () => {
                     href={`https://wa.me/96170420110?text=Hi! I'm interested in renting the ${selectedGame.name} for my event. Can you provide more details?`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackWhatsAppClick()}
                     className="block w-full py-4 rounded-xl font-bold text-lg transition-all text-white text-center"
                     style={{ background: `linear-gradient(135deg, #25D366, #128C7E)` }}
                   >

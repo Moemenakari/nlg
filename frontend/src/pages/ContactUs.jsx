@@ -3,6 +3,7 @@ import Layout from '../components/layout/Layout';
 import { COLORS, CONTACT_INFO } from '../utils/constants';
 import { Phone, Email, LocationOn, WhatsApp, Instagram, Facebook, Send } from '@mui/icons-material';
 import { contactAPI } from '../services/api';
+import { trackWhatsAppClick } from '../utils/analytics';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -239,8 +240,8 @@ const ContactUs = () => {
                   <h3 className="font-poppins font-bold text-lg mb-4 text-white">
                     Follow Us on Social Media
                   </h3>
-                  <div className="flex gap-4">
-                    <a href="https://wa.me/96170420110" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-white flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-md">
+                   <div className="flex gap-4">
+                    <a href="https://wa.me/96170420110" target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick()} className="w-12 h-12 rounded-xl bg-white flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-md">
                       <WhatsApp style={{ fontSize: '24px' }} className="text-green-500" />
                     </a>
                     <a href="https://instagram.com/nextlevelgame_arcades" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-white flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-md">

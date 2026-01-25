@@ -9,6 +9,7 @@ import {
   Facebook,
   WhatsApp,
 } from '@mui/icons-material';
+import { trackWhatsAppClick } from '../../utils/analytics';
 import { COLORS, CONTACT_INFO } from '../../utils/constants';
 
 const Footer = () => {
@@ -176,11 +177,12 @@ const Footer = () => {
               {[
                 { Icon: Instagram, href: 'https://instagram.com/nextlevelgame_arcades', color: '#E1306C' },
                 { Icon: Facebook, href: 'https://www.facebook.com/share/1D5uGhWqMg/?mibextid=wwXIfr', color: '#4267B2' },
-                { Icon: WhatsApp, href: 'https://wa.me/96170420110', color: '#25D366' },
-              ].map(({ Icon, href, color }, index) => (
+                { Icon: WhatsApp, href: 'https://wa.me/96170420110', color: '#25D366', onClick: () => trackWhatsAppClick() },
+              ].map(({ Icon, href, color, onClick }, index) => (
                 <motion.a
                   key={index}
                   href={href}
+                  onClick={onClick}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300"
